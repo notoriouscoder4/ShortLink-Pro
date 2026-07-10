@@ -17,7 +17,12 @@ public class UserEntity extends Lombok {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.USER;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean enabled = true;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
