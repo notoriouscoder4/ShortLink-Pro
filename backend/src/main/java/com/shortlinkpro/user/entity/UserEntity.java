@@ -1,32 +1,19 @@
 package com.shortlinkpro.user.entity;
 
+import com.shortlinkpro.common.entity.BaseEntity;
 import com.shortlinkpro.common.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity extends Lombok {
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
-    private Role role = Role.USER;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private boolean enabled = true;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserEntity extends BaseEntity {
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -37,20 +24,13 @@ public class UserEntity extends Lombok {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private Role role = Role.USER;
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean enabled = true;
 
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }
